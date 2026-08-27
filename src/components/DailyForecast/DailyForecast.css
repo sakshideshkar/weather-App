@@ -1,0 +1,160 @@
+.daily-forecast-section {
+  margin-bottom: 2.25rem;
+}
+
+.daily-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.daily-row-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  gap: 1rem;
+  transition: all var(--transition-fast);
+}
+
+.daily-row-card:hover {
+  transform: translateX(4px);
+  border-color: var(--accent-cyan);
+}
+
+/* Day & Date */
+.daily-date-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 100px;
+}
+
+.daily-day-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.daily-date-str {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Condition */
+.daily-condition-col {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 140px;
+}
+
+.daily-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+}
+
+.daily-condition-text {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* Precipitation */
+.daily-pop-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+}
+
+.daily-pop-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-cyan);
+  background: rgba(56, 189, 248, 0.12);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-full);
+}
+
+.pop-zero {
+  color: var(--text-muted);
+  opacity: 0.5;
+  font-size: 0.9rem;
+}
+
+/* Temperature Range Bar */
+.daily-temp-range-col {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex: 1;
+  max-width: 280px;
+  justify-content: flex-end;
+}
+
+.temp-min-text {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  min-width: 40px;
+  text-align: right;
+}
+
+.range-bar-track {
+  position: relative;
+  flex: 1;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--bg-pill);
+  overflow: hidden;
+  min-width: 80px;
+}
+
+.range-bar-fill {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, #38bdf8 0%, #fbbf24 50%, #f97316 100%);
+}
+
+.temp-max-text {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  min-width: 40px;
+  text-align: left;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .daily-row-card {
+    padding: 0.85rem 1rem;
+    gap: 0.5rem;
+  }
+
+  .daily-date-col {
+    min-width: 70px;
+  }
+
+  .daily-condition-col {
+    min-width: auto;
+  }
+
+  .daily-condition-text {
+    display: none;
+  }
+
+  .daily-temp-range-col {
+    max-width: none;
+  }
+}

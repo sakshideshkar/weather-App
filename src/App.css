@@ -1,0 +1,15 @@
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-main-content {
+  flex: 1;
+  width: 100%;
+}
+
+.page-container {
+  width: 100%;
+  animation: fadeIn 0.35s ease;
+}

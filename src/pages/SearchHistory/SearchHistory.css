@@ -1,0 +1,23 @@
+.search-history-page {
+  padding: 2.5rem 0;
+  min-height: calc(100vh - 280px);
+}
+
+.history-icon-badge {
+  background: rgba(56, 189, 248, 0.12) !important;
+  border: 1px solid rgba(56, 189, 248, 0.25) !important;
+}
+
+.history-icon-color {
+  color: var(--accent-cyan) !important;
+}
+
+.history-count-pill {
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-full);
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: var(--accent-cyan);
+  font-size: 0.85rem;
+  font-weight: 700;
+}

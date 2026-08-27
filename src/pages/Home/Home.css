@@ -1,0 +1,29 @@
+.home-page-container {
+  padding: 2rem 0;
+  min-height: calc(100vh - 280px);
+}
+
+.weather-dashboard-layout {
+  display: flex;
+  flex-direction: column;
+  transition: opacity var(--transition-fast);
+}
+
+.weather-dashboard-layout.updating-overlay {
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+.dashboard-columns-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-columns-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}

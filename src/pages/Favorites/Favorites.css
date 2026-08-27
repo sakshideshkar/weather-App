@@ -1,0 +1,126 @@
+.favorites-page {
+  padding: 2.5rem 0;
+  min-height: calc(100vh - 280px);
+}
+
+.page-header-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.page-title-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.page-icon-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-lg);
+  background: rgba(244, 63, 94, 0.12);
+  border: 1px solid rgba(244, 63, 94, 0.25);
+  flex-shrink: 0;
+}
+
+.fav-icon-color {
+  color: var(--accent-rose);
+  font-size: 1.5rem;
+}
+
+.page-title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.page-subtitle {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+.favorites-count-pill {
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-full);
+  background: rgba(244, 63, 94, 0.15);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  color: var(--accent-rose);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* Add Favorite Form */
+.add-favorite-form {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.6rem 0.5rem 1.25rem;
+  border-radius: var(--radius-xl);
+  margin-bottom: 2rem;
+}
+
+.add-fav-search-icon {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.add-fav-input {
+  flex: 1;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+}
+
+.add-fav-input::placeholder {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.add-fav-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius-lg);
+  background: var(--accent-gradient);
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.35);
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.add-fav-submit-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(56, 189, 248, 0.5);
+}
+
+.add-fav-submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.favorite-add-error {
+  margin-top: -1.25rem;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+  font-size: 0.85rem;
+}

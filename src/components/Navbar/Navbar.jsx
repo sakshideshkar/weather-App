@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useWeather } from '../../context/WeatherContext';
+import { useAuth } from '../../context/AuthContext';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import TemperatureToggle from '../TemperatureToggle/TemperatureToggle';
+import AmbientSoundToggle from '../AmbientSoundToggle/AmbientSoundToggle';
 import { WiDayCloudy } from 'react-icons/wi';
 import {
   FaHouse,
   FaHeart,
   FaClockRotateLeft,
   FaCircleInfo,
+  FaCodeCompare,
+  FaPlaneDeparture,
+  FaUser,
+  FaArrowRightToBracket,
   FaBars,
   FaXmark
 } from 'react-icons/fa6';
@@ -16,6 +22,7 @@ import './Navbar.css';
 
 const Navbar = () => {
   const { favorites } = useWeather();
+  const { user, isAuthenticated } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
@@ -44,6 +51,24 @@ const Navbar = () => {
           >
             <FaHouse className="nav-icon" />
             <span>Home</span>
+          </NavLink>
+
+          <NavLink
+            to="/compare"
+            className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+            id="nav-link-compare"
+          >
+            <FaCodeCompare className="nav-icon" />
+            <span>Compare</span>
+          </NavLink>
+
+          <NavLink
+            to="/travel"
+            className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+            id="nav-link-travel"
+          >
+            <FaPlaneDeparture className="nav-icon" />
+            <span>Travel Route</span>
           </NavLink>
 
           <NavLink
@@ -77,14 +102,29 @@ const Navbar = () => {
           </NavLink>
         </nav>
 
-        {/* Controls: Unit Toggle + Theme Toggle */}
+        {/* Controls: Audio + Units + Theme + User Auth */}
         <div className="navbar-actions desktop-actions">
+          <AmbientSoundToggle />
           <TemperatureToggle />
           <ThemeToggle />
+
+          {/* User Profile / Login Link */}
+          {isAuthenticated && user ? (
+            <Link to="/profile" className="nav-user-pill" title="My Weather Profile">
+              <span className="nav-user-avatar">{user.avatar || '☀️'}</span>
+              <span className="nav-user-name">{user.name.split(' ')[0]}</span>
+            </Link>
+          ) : (
+            <Link to="/login" className="nav-login-btn" title="Sign In or Demo Account">
+              <FaArrowRightToBracket size={13} />
+              <span>Sign In</span>
+            </Link>
+          )}
         </div>
 
         {/* Mobile Hamburger Toggle */}
         <div className="mobile-toggle-group">
+          <AmbientSoundToggle />
           <ThemeToggle />
           <button
             type="button"
@@ -101,6 +141,28 @@ const Navbar = () => {
       {/* Mobile Drawer Menu */}
       <div className={`mobile-drawer ${mobileMenuOpen ? 'open' : ''}`}>
         <div className="mobile-drawer-content">
+          {/* User Auth Banner in Drawer */}
+          <div className="mobile-user-drawer-card">
+            {isAuthenticated && user ? (
+              <Link to="/profile" className="drawer-user-link" onClick={closeMobileMenu}>
+                <span className="drawer-avatar">{user.avatar || '☀️'}</span>
+                <div>
+                  <strong className="drawer-name">{user.name}</strong>
+                  <span className="drawer-sub">{user.homeCity ? `Base: ${user.homeCity}` : 'View Profile'}</span>
+                </div>
+              </Link>
+            ) : (
+              <div className="drawer-guest-box">
+                <Link to="/login" className="drawer-auth-btn primary" onClick={closeMobileMenu}>
+                  Sign In
+                </Link>
+                <Link to="/signup" className="drawer-auth-btn secondary" onClick={closeMobileMenu}>
+                  Register
+                </Link>
+              </div>
+            )}
+          </div>
+
           <nav className="mobile-nav-links">
             <NavLink
               to="/"
@@ -110,6 +172,24 @@ const Navbar = () => {
             >
               <FaHouse className="mobile-nav-icon" />
               <span>Home / Weather</span>
+            </NavLink>
+
+            <NavLink
+              to="/compare"
+              className={({ isActive }) => `mobile-nav-link ${isActive ? 'active' : ''}`}
+              onClick={closeMobileMenu}
+            >
+              <FaCodeCompare className="mobile-nav-icon" />
+              <span>City Weather Duel</span>
+            </NavLink>
+
+            <NavLink
+              to="/travel"
+              className={({ isActive }) => `mobile-nav-link ${isActive ? 'active' : ''}`}
+              onClick={closeMobileMenu}
+            >
+              <FaPlaneDeparture className="mobile-nav-icon" />
+              <span>Smart Travel Route</span>
             </NavLink>
 
             <NavLink
@@ -132,6 +212,17 @@ const Navbar = () => {
               <FaClockRotateLeft className="mobile-nav-icon" />
               <span>Search History</span>
             </NavLink>
+
+            {isAuthenticated && (
+              <NavLink
+                to="/profile"
+                className={({ isActive }) => `mobile-nav-link ${isActive ? 'active' : ''}`}
+                onClick={closeMobileMenu}
+              >
+                <FaUser className="mobile-nav-icon" />
+                <span>My Profile & Settings</span>
+              </NavLink>
+            )}
 
             <NavLink
               to="/about"

@@ -13,29 +13,29 @@
   position: absolute;
   top: -20%;
   right: -10%;
-  width: 350px;
-  height: 350px;
+  width: 380px;
+  height: 380px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.2) 0%, rgba(56, 189, 248, 0) 70%);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, rgba(56, 189, 248, 0) 70%);
   pointer-events: none;
   z-index: 0;
 }
 
 /* Weather condition dynamic variations */
 .weather-bg-clear .current-weather-glow {
-  background: radial-gradient(circle, rgba(251, 191, 36, 0.22) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.25) 0%, transparent 70%);
 }
 
 .weather-bg-rain .current-weather-glow {
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.3) 0%, transparent 70%);
 }
 
 .weather-bg-thunderstorm .current-weather-glow {
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.35) 0%, transparent 70%);
 }
 
 .weather-bg-snow .current-weather-glow {
-  background: radial-gradient(circle, rgba(224, 242, 254, 0.25) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(224, 242, 254, 0.3) 0%, transparent 70%);
 }
 
 /* Card Top Row */
@@ -107,6 +107,110 @@
   font-size: 0.85rem;
 }
 
+/* Actions Group */
+.current-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+/* Audio Briefing Button */
+.briefing-audio-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.6rem 0.95rem;
+  border-radius: var(--radius-full);
+  background: rgba(14, 165, 233, 0.12);
+  border: 1px solid rgba(14, 165, 233, 0.35);
+  color: var(--accent-cyan);
+  font-size: 0.84rem;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.briefing-audio-btn:hover {
+  background: rgba(14, 165, 233, 0.22);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 15px rgba(14, 165, 233, 0.3);
+  transform: translateY(-1px);
+}
+
+.briefing-audio-btn.is-speaking {
+  background: rgba(244, 63, 94, 0.18);
+  border-color: var(--accent-rose);
+  color: var(--accent-rose);
+  animation: pulseSpeaking 1.5s infinite ease-in-out;
+}
+
+@keyframes pulseSpeaking {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(244, 63, 94, 0);
+  }
+}
+
+.briefing-icon {
+  font-size: 0.95rem;
+}
+
+/* Snap Modal Button */
+.snap-modal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.6rem 0.95rem;
+  border-radius: var(--radius-full);
+  background: rgba(168, 85, 247, 0.12);
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  color: #c084fc;
+  font-size: 0.84rem;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.snap-modal-btn:hover {
+  background: rgba(168, 85, 247, 0.22);
+  border-color: #a855f7;
+  color: #d8b4fe;
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.35);
+  transform: translateY(-1px);
+}
+
+.snap-icon {
+  font-size: 0.95rem;
+}
+
+.share-weather-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-pill);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.share-weather-btn:hover {
+  background: var(--bg-pill-hover);
+  color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+}
+
+.copied-icon {
+  color: #10b981;
+}
+
 /* Favorite Button */
 .favorite-toggle-btn {
   display: inline-flex;
@@ -121,6 +225,7 @@
   font-weight: 600;
   transition: all var(--transition-fast);
   flex-shrink: 0;
+  cursor: pointer;
 }
 
 .favorite-toggle-btn:hover {
@@ -162,7 +267,7 @@
 }
 
 .temp-hero-value {
-  font-size: 5rem;
+  font-size: 5.25rem;
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 1;
@@ -240,7 +345,7 @@
 }
 
 .condition-title {
-  font-size: 1.4rem;
+  font-size: 1.45rem;
   font-weight: 700;
   color: var(--text-primary);
   letter-spacing: -0.01em;
@@ -250,6 +355,87 @@
   font-size: 0.88rem;
   color: var(--text-muted);
   text-transform: capitalize;
+}
+
+/* Daylight Progress Strip */
+.daylight-progress-strip {
+  position: relative;
+  z-index: 1;
+  margin-top: 1.85rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.daylight-times-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+}
+
+.daylight-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.daylight-track {
+  position: relative;
+  width: 100%;
+  height: 6px;
+  background: var(--bg-pill);
+  border-radius: var(--radius-full);
+  overflow: visible;
+}
+
+.daylight-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, #fbbf24 0%, #38bdf8 100%);
+  transition: width 0.6s ease;
+}
+
+.daylight-sun-marker {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fbbf24;
+  box-shadow: 0 0 10px #fbbf24;
+}
+
+/* Heart Burst Celebration Particles */
+.heart-burst-container {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.burst-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+  animation: burstAnim 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes burstAnim {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--dx), var(--dy)) scale(0);
+    opacity: 0;
+  }
 }
 
 /* Responsive */
@@ -285,5 +471,26 @@
 
   .condition-badge-wrap {
     align-items: flex-start;
+  }
+}
+
+@media (max-width: 576px) {
+  .current-weather-top {
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .current-hero-actions {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 0.45rem;
+  }
+
+  .briefing-audio-btn,
+  .snap-modal-btn,
+  .share-weather-btn,
+  .favorite-toggle-btn {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.8rem;
   }
 }

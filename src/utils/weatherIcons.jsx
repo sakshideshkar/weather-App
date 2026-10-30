@@ -19,8 +19,7 @@ import {
   WiNightFog,
   WiFog,
   WiDayShowers,
-  WiNightAltShowers,
-  WiRainMix
+  WiNightAltShowers
 } from 'react-icons/wi';
 
 /**

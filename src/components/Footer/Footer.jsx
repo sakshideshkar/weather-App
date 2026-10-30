@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useWeather } from '../../context/WeatherContext';
 import { WiDayCloudy } from 'react-icons/wi';
-import { FaHeart, FaGithub } from 'react-icons/fa6';
 import './Footer.css';
 
 const Footer = () => {
@@ -27,6 +26,8 @@ const Footer = () => {
             <h4 className="footer-section-title">Navigation</h4>
             <div className="footer-nav-links">
               <Link to="/">Dashboard</Link>
+              <Link to="/compare">City Weather Duel</Link>
+              <Link to="/travel">Smart Travel Route</Link>
               <Link to="/favorites">Favorite Locations</Link>
               <Link to="/search-history">Search History</Link>
               <Link to="/about">About & API Docs</Link>

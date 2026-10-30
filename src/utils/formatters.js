@@ -151,3 +151,103 @@ export const formatShortDate = (dateStr) => {
     return dateStr;
   }
 };
+
+/**
+ * Calculates exact astronomical Moon Phase & Illumination %
+ */
+export const getMoonPhase = (date = new Date()) => {
+  try {
+    const refDate = new Date('2024-01-11T11:57:00Z').getTime();
+    const currentMs = new Date(date).getTime();
+    const synodicMonth = 29.53058867 * 24 * 60 * 60 * 1000;
+    const phase = ((currentMs - refDate) % synodicMonth) / synodicMonth;
+    const normalizedPhase = phase < 0 ? phase + 1 : phase;
+    const illumination = Math.round((0.5 * (1 - Math.cos(normalizedPhase * 2 * Math.PI))) * 100);
+
+    let name = 'New Moon';
+    let icon = '🌑';
+    if (normalizedPhase < 0.03 || normalizedPhase >= 0.97) {
+      name = 'New Moon';
+      icon = '🌑';
+    } else if (normalizedPhase < 0.22) {
+      name = 'Waxing Crescent';
+      icon = '🌒';
+    } else if (normalizedPhase < 0.28) {
+      name = 'First Quarter';
+      icon = '🌓';
+    } else if (normalizedPhase < 0.47) {
+      name = 'Waxing Gibbous';
+      icon = '🌔';
+    } else if (normalizedPhase < 0.53) {
+      name = 'Full Moon';
+      icon = '🌕';
+    } else if (normalizedPhase < 0.72) {
+      name = 'Waning Gibbous';
+      icon = '🌖';
+    } else if (normalizedPhase < 0.78) {
+      name = 'Last Quarter';
+      icon = '🌗';
+    } else {
+      name = 'Waning Crescent';
+      icon = '🌘';
+    }
+
+    return {
+      phase: normalizedPhase,
+      name,
+      icon,
+      illumination
+    };
+  } catch {
+    return { phase: 0.5, name: 'Full Moon', icon: '🌕', illumination: 100 };
+  }
+};
+
+/**
+ * Calculates Beaufort Wind Scale level & real world description
+ */
+export const getBeaufortScale = (kmh) => {
+  const speed = Number(kmh) || 0;
+  if (speed < 1) return { number: 0, label: 'Calm', desc: 'Smoke rises vertically; calm waters.' };
+  if (speed <= 5) return { number: 1, label: 'Light Air', desc: 'Smoke drift indicates wind direction.' };
+  if (speed <= 11) return { number: 2, label: 'Light Breeze', desc: 'Wind felt on face; leaves rustle.' };
+  if (speed <= 19) return { number: 3, label: 'Gentle Breeze', desc: 'Leaves and small twigs in constant motion.' };
+  if (speed <= 28) return { number: 4, label: 'Moderate Breeze', desc: 'Dust raised; small branches move.' };
+  if (speed <= 38) return { number: 5, label: 'Fresh Breeze', desc: 'Small trees in leaf begin to sway.' };
+  if (speed <= 49) return { number: 6, label: 'Strong Breeze', desc: 'Large branches in motion; wires whistle.' };
+  if (speed <= 61) return { number: 7, label: 'Moderate Gale', desc: 'Whole trees in motion; walking resisted.' };
+  if (speed <= 74) return { number: 8, label: 'Fresh Gale', desc: 'Twigs break off trees; impeded progress.' };
+  return { number: 9, label: 'Strong Gale / Storm', desc: 'Structural hazard; branches snap.' };
+};
+
+/**
+ * Accurate Dew Point calculation via Magnus-Tetens formula
+ */
+export const calculateDewPoint = (tempC, humidity) => {
+  if (tempC === undefined || humidity === undefined) return 0;
+  const t = Number(tempC);
+  const rh = Math.max(1, Math.min(100, Number(humidity)));
+  const a = 17.27;
+  const b = 237.7;
+  const alpha = ((a * t) / (b + t)) + Math.log(rh / 100);
+  const dewPoint = (b * alpha) / (a - alpha);
+  return Math.round(dewPoint);
+};
+
+/**
+ * Calculates total daylight hours & minutes between sunrise and sunset
+ */
+export const calculateDaylightDuration = (sunriseIso, sunsetIso) => {
+  try {
+    if (!sunriseIso || !sunsetIso) return '-- hrs';
+    const rise = new Date(sunriseIso).getTime();
+    const set = new Date(sunsetIso).getTime();
+    if (set <= rise) return '-- hrs';
+    const diffMs = set - rise;
+    const hours = Math.floor(diffMs / (1000 * 60 * 60));
+    const mins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    return `${hours}h ${mins}m`;
+  } catch {
+    return '-- hrs';
+  }
+};

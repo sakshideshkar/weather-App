@@ -1,0 +1,237 @@
+.aqi-card {
+  padding: 1.5rem 1.75rem;
+  border-radius: var(--radius-xl);
+  margin-top: 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-card);
+  transition: all var(--transition-normal);
+}
+
+.aqi-card:hover {
+  border-color: var(--border-color-hover);
+}
+
+.aqi-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  gap: 1rem;
+}
+
+.aqi-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.aqi-icon-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aqi-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.1rem;
+}
+
+.aqi-scale-tag {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.aqi-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 700;
+  border: 1px solid;
+}
+
+.aqi-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Meter Row */
+.aqi-meter-row {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.aqi-gauge-container {
+  position: relative;
+  width: 170px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.aqi-gauge-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.aqi-active-arc {
+  transition: stroke-dashoffset 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.aqi-gauge-center {
+  position: absolute;
+  bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.aqi-hero-number {
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+  font-family: var(--font-heading);
+}
+
+.aqi-hero-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.aqi-summary-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.aqi-description-text {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.aqi-recommendations-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.55rem;
+}
+
+.aqi-rec-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-pill);
+  font-size: 0.78rem;
+  line-height: 1.3;
+}
+
+.aqi-rec-item.safe {
+  border-left: 3px solid #10b981;
+  color: var(--text-secondary);
+}
+
+.aqi-rec-item.safe .rec-icon {
+  color: #10b981;
+}
+
+.aqi-rec-item.caution {
+  border-left: 3px solid #f97316;
+  color: var(--text-secondary);
+}
+
+.aqi-rec-item.caution .rec-icon {
+  color: #f97316;
+}
+
+.rec-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+/* Pollutants Grid */
+.pollutants-section {
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.15rem;
+}
+
+.pollutants-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.pollutants-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.pollutant-card {
+  padding: 0.75rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-pill);
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.pollutant-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.pollutant-val {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.pollutant-val small {
+  font-size: 0.68rem;
+  font-weight: normal;
+  color: var(--text-muted);
+}
+
+.pollutant-badge {
+  font-size: 0.66rem;
+  color: var(--accent-cyan);
+}
+
+@media (max-width: 768px) {
+  .aqi-meter-row {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .aqi-recommendations-grid {
+    grid-template-columns: 1fr;
+  }
+  .pollutants-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+

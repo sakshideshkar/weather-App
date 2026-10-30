@@ -6,65 +6,253 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.15rem;
+  gap: 1rem;
+}
+
+.header-title-with-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.live-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  background: rgba(56, 189, 248, 0.12);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.hourly-controls-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.view-mode-toggle {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+}
+
+.mode-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.mode-btn:hover {
+  color: var(--text-primary);
+}
+
+.mode-btn.active {
+  background: var(--accent-cyan);
+  color: #0b1120;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
 }
 
 .scroll-arrow-controls {
   display: flex;
-  align-items: center;
   gap: 0.5rem;
 }
 
 .scroll-btn {
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--bg-card);
+  border-radius: var(--radius-full);
+  background: var(--bg-pill);
   border: 1px solid var(--border-color);
   color: var(--text-secondary);
   transition: all var(--transition-fast);
 }
 
 .scroll-btn:hover {
-  background: rgba(56, 189, 248, 0.15);
-  border-color: var(--accent-cyan);
+  background: var(--bg-pill-hover);
+  color: var(--text-primary);
+  border-color: var(--border-highlight);
+}
+
+/* ==========================================================================
+   Chart View
+   ========================================================================== */
+.hourly-chart-wrapper {
+  padding: 1.25rem 1.25rem 0.5rem 1.25rem;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  position: relative;
+}
+
+.chart-active-preview-banner {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-pill);
+  border: 1px solid var(--border-color);
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+  animation: fadeIn 0.2s ease;
+}
+
+.preview-time-tag {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.preview-condition-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.preview-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.preview-metric-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.preview-metric-tag.temp-tag {
+  font-size: 1.1rem;
+  font-weight: 800;
   color: var(--accent-cyan);
 }
 
+.preview-metric-tag.rain-tag {
+  color: #38bdf8;
+}
+
+.preview-metric-tag.wind-tag {
+  color: var(--text-secondary);
+}
+
+.chart-scroll-viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0.5rem;
+}
+
+.hourly-svg-canvas {
+  display: block;
+}
+
+.chart-grid-line {
+  stroke: var(--border-color);
+  stroke-dasharray: 4 4;
+  stroke-width: 1;
+}
+
+.rain-bar-rect {
+  fill: #38bdf8;
+  transition: all 0.2s ease;
+}
+
+.chart-curve-path {
+  filter: drop-shadow(0 4px 10px rgba(56, 189, 248, 0.35));
+  animation: strokeDash 1.2s ease-out forwards;
+}
+
+.chart-scrubber-line {
+  stroke: rgba(56, 189, 248, 0.45);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 3;
+}
+
+.chart-point-group {
+  cursor: pointer;
+}
+
+.chart-data-dot {
+  fill: #0f172a;
+  stroke: #38bdf8;
+  stroke-width: 2.5;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.chart-data-dot.active {
+  r: 7;
+  stroke: #ffffff;
+  stroke-width: 3;
+  fill: #38bdf8;
+  filter: drop-shadow(0 0 8px #38bdf8);
+}
+
+.chart-temp-label {
+  fill: var(--text-primary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  font-family: var(--font-body);
+}
+
+.chart-time-label {
+  fill: var(--text-muted);
+  font-size: 0.74rem;
+  font-weight: 500;
+  font-family: var(--font-body);
+}
+
+/* ==========================================================================
+   Cards View
+   ========================================================================== */
 .hourly-scroll-container {
   display: flex;
-  gap: 1rem;
+  gap: 0.85rem;
   overflow-x: auto;
-  padding-bottom: 0.75rem;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  padding: 0.35rem 0.25rem 0.75rem 0.25rem;
 }
 
 .hourly-card {
-  flex: 0 0 110px;
-  scroll-snap-align: start;
-  padding: 1.25rem 0.75rem;
+  flex: 0 0 115px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.55rem;
+  padding: 1.15rem 0.75rem;
   border-radius: var(--radius-lg);
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
   text-align: center;
-  transition: transform var(--transition-fast), border-color var(--transition-fast);
+  transition: all var(--transition-normal);
+  cursor: default;
 }
 
 .hourly-card:hover {
   transform: translateY(-4px);
   border-color: var(--accent-cyan);
+  box-shadow: 0 8px 25px rgba(56, 189, 248, 0.2);
+}
+
+.hourly-card.is-now-card {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: var(--accent-cyan);
 }
 
 .hourly-time {
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   font-weight: 600;
   color: var(--text-secondary);
 }
@@ -73,34 +261,40 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 44px;
+  margin: 0.2rem 0;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
 }
 
 .hourly-temp {
   font-size: 1.25rem;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--text-primary);
-  letter-spacing: -0.02em;
 }
 
 .hourly-pop-wrap {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 0.25rem;
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 600;
-  color: var(--text-muted);
 }
 
 .pop-active {
-  color: var(--accent-cyan);
+  color: #38bdf8;
 }
 
 .pop-inactive {
   color: var(--text-muted);
-  opacity: 0.4;
 }
 
 .hourly-pop-value {
+  color: var(--text-secondary);
+}
+
+.hourly-wind-mini {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.68rem;
   color: var(--text-muted);
 }

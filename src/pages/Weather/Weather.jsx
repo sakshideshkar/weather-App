@@ -2,13 +2,18 @@ import React, { useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useWeather } from '../../context/WeatherContext';
 import SearchBar from '../../components/SearchBar/SearchBar';
+import WeatherAlertBanner from '../../components/WeatherAlertBanner/WeatherAlertBanner';
 import CurrentWeather from '../../components/CurrentWeather/CurrentWeather';
 import WeatherDetails from '../../components/WeatherDetails/WeatherDetails';
 import HourlyForecast from '../../components/HourlyForecast/HourlyForecast';
 import DailyForecast from '../../components/DailyForecast/DailyForecast';
+import AirQualityCard from '../../components/AirQualityCard/AirQualityCard';
+import LifestyleAdvisory from '../../components/LifestyleAdvisory/LifestyleAdvisory';
+import WeatherRadar from '../../components/WeatherRadar/WeatherRadar';
+import WeatherAIAssistant from '../../components/WeatherAI/WeatherAIAssistant';
+import IndiaWeather from '../../components/IndiaWeather/IndiaWeather';
 import Loading from '../../components/Loading/Loading';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
-import IndiaWeather from '../../components/IndiaWeather/IndiaWeather';
 import '../Home/Home.css';
 import './Weather.css';
 
@@ -45,6 +50,7 @@ const Weather = () => {
 
       {weatherData && (
         <div className={`weather-dashboard-layout ${loading ? 'updating-overlay' : ''}`}>
+          <WeatherAlertBanner weather={weatherData} />
           <CurrentWeather weather={weatherData} />
           <HourlyForecast hourly={weatherData.hourly} />
 
@@ -58,6 +64,10 @@ const Weather = () => {
             </div>
           </div>
 
+          <AirQualityCard weather={weatherData} />
+          <WeatherAIAssistant weather={weatherData} />
+          <LifestyleAdvisory weather={weatherData} />
+          <WeatherRadar weather={weatherData} />
           <IndiaWeather />
         </div>
       )}

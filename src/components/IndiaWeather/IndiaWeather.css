@@ -1,14 +1,13 @@
 .india-weather-section {
-  margin-top: 3rem;
+  margin-top: 2.75rem;
   margin-bottom: 2.5rem;
-  width: 100%;
 }
 
 .india-header-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   gap: 1rem;
   flex-wrap: wrap;
 }
@@ -22,19 +21,11 @@
 .india-flag-badge {
   font-size: 2rem;
   line-height: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: var(--radius-md);
-  background: rgba(255, 153, 51, 0.12);
-  border: 1px solid rgba(255, 153, 51, 0.3);
-  box-shadow: 0 0 15px rgba(255, 153, 51, 0.15);
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
 }
 
 .india-subtitle {
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   color: var(--text-secondary);
   margin-top: 0.2rem;
 }
@@ -43,71 +34,160 @@
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  padding: 0.5rem 1rem;
+  padding: 0.55rem 1.1rem;
   border-radius: var(--radius-full);
   background: var(--bg-pill);
   border: 1px solid var(--border-color);
   color: var(--text-secondary);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 600;
   transition: all var(--transition-fast);
+  cursor: pointer;
 }
 
 .india-refresh-btn:hover {
-  background: rgba(56, 189, 248, 0.15);
-  border-color: var(--accent-cyan);
+  background: var(--bg-pill-hover);
   color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
 }
 
 .india-refresh-btn.refreshing {
-  opacity: 0.7;
+  opacity: 0.75;
+  pointer-events: none;
 }
 
-.india-cities-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1rem;
-}
-
-.india-city-card {
-  padding: 1.15rem 1.25rem;
+/* Toolbar Row */
+.india-toolbar-row {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: space-between;
+  margin-bottom: 1.35rem;
   gap: 1rem;
-  border-radius: var(--radius-lg);
-  background: var(--bg-card);
+  flex-wrap: wrap;
+}
+
+.india-region-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.region-tab-btn {
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 600;
+  background: var(--bg-pill);
   border: 1px solid var(--border-color);
+  color: var(--text-secondary);
   cursor: pointer;
+  white-space: nowrap;
   transition: all var(--transition-fast);
 }
 
+.region-tab-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-pill-hover);
+}
+
+.region-tab-btn.active {
+  background: var(--accent-gradient);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 2px 10px rgba(56, 189, 248, 0.35);
+}
+
+.india-search-sort-group {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.india-search-box {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--bg-pill);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  padding: 0.35rem 0.85rem;
+}
+
+.india-search-icon {
+  color: var(--text-muted);
+}
+
+.india-search-input {
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 0.78rem;
+  width: 110px;
+}
+
+.india-sort-select {
+  background: var(--bg-pill);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  padding: 0.35rem 0.85rem;
+  cursor: pointer;
+  outline: none;
+}
+
+.india-sort-select option {
+  background: var(--bg-app);
+  color: var(--text-primary);
+}
+
+/* Cities Grid */
+.india-cities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1.15rem;
+}
+
+.india-city-card {
+  padding: 1.25rem;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: all var(--transition-normal);
+  background: var(--bg-card);
+}
+
 .india-city-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   border-color: var(--accent-cyan);
-  box-shadow: var(--shadow-pop);
+  box-shadow: 0 10px 25px rgba(56, 189, 248, 0.18);
 }
 
 .india-card-top {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 0.5rem;
 }
 
 .india-city-info {
   display: flex;
   flex-direction: column;
+  gap: 0.2rem;
 }
 
 .india-city-name-row {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.4rem;
 }
 
 .india-pin {
-  color: var(--accent-amber);
+  color: var(--accent-cyan);
 }
 
 .india-city-name {
@@ -117,8 +197,7 @@
 }
 
 .india-state-name {
-  font-size: 0.75rem;
-  font-weight: 500;
+  font-size: 0.76rem;
   color: var(--text-muted);
 }
 
@@ -126,14 +205,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
-  flex-shrink: 0;
 }
 
 .india-icon-skeleton {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: var(--bg-pill);
   animation: shimmer 1.5s infinite;
@@ -143,7 +219,8 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 0.5rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 0.85rem;
 }
 
 .india-temp-wrap {
@@ -152,56 +229,50 @@
 }
 
 .india-temp-val {
-  font-size: 1.75rem;
+  font-size: 1.6rem;
   font-weight: 800;
+  line-height: 1.1;
   color: var(--text-primary);
-  line-height: 1;
-  letter-spacing: -0.02em;
 }
 
 .india-condition-text {
   font-size: 0.78rem;
-  font-weight: 600;
   color: var(--text-secondary);
-  margin-top: 0.25rem;
 }
 
 .india-card-meta {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 0.2rem;
+  gap: 0.35rem;
 }
 
 .india-minmax-row {
   display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-size: 0.75rem;
+  gap: 0.5rem;
+  font-size: 0.74rem;
   font-weight: 600;
 }
 
 .india-high {
+  color: #f97316;
   display: inline-flex;
   align-items: center;
   gap: 0.15rem;
-  color: #f97316;
 }
 
 .india-low {
+  color: #38bdf8;
   display: inline-flex;
   align-items: center;
   gap: 0.15rem;
-  color: #38bdf8;
 }
 
 .india-humidity-row {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 0.15rem;
-  font-size: 0.75rem;
+  font-size: 0.74rem;
   color: var(--text-muted);
-  font-weight: 600;
 }
 
 .india-humid-icon {

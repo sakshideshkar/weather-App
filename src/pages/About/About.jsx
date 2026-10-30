@@ -3,8 +3,7 @@ import {
   WiDayCloudy,
   WiStrongWind,
   WiThermometer,
-  WiDayRain,
-  WiBarometer
+  WiDayRain
 } from 'react-icons/wi';
 import {
   FaReact,
@@ -12,7 +11,6 @@ import {
   FaRoute,
   FaPalette,
   FaKey,
-  FaShieldHalved,
   FaCode
 } from 'react-icons/fa6';
 import './About.css';
@@ -41,7 +39,7 @@ const About = () => {
 
       {/* Feature Highlights Grid */}
       <section className="about-section">
-        <h2 className="section-heading">Key Features</h2>
+        <h2 className="section-heading">Key Features & Premium Innovations</h2>
         <div className="about-features-grid">
           <div className="about-feature-card glass-card">
             <div className="feature-icon-badge badge-blue">
@@ -57,9 +55,9 @@ const About = () => {
             <div className="feature-icon-badge badge-cyan">
               <WiDayRain size={30} />
             </div>
-            <h3 className="feature-title">Hourly & 7-Day Timelines</h3>
+            <h3 className="feature-title">Interactive Spline Curve Chart</h3>
             <p className="feature-desc">
-              Scrollable 24-hour forecast strip with precipitation probability and a comprehensive 7-day outlook with relative temperature range bars.
+              Smooth SVG Bézier temperature curve with scrubber tooltips, precipitation probability bars, and 7-day outlook timeline.
             </p>
           </div>
 
@@ -67,9 +65,9 @@ const About = () => {
             <div className="feature-icon-badge badge-amber">
               <WiStrongWind size={30} />
             </div>
-            <h3 className="feature-title">GPS Geolocation</h3>
+            <h3 className="feature-title">60fps Ambient Atmosphere</h3>
             <p className="feature-desc">
-              One-click "My Location" lookup leveraging the browser Geolocation API with complete permission and error handling.
+              Hardware-accelerated dynamic particle canvas rendering realistic rain, snow, sunbeams, lightning storm flashes, and starry skies.
             </p>
           </div>
 
@@ -77,9 +75,29 @@ const About = () => {
             <div className="feature-icon-badge badge-purple">
               <FaPalette size={20} />
             </div>
-            <h3 className="feature-title">Glassmorphism & Themes</h3>
+            <h3 className="feature-title">Web Audio Soundscapes</h3>
             <p className="feature-desc">
-              Ultra-modern frosted glass interface, dynamic weather glowing accents, full Dark & Light mode toggle, and °C/°F unit conversions.
+              Synthesized natural weather audio engine (rain, wind gusts, night crickets, warm breezes) operating 100% offline via Web Audio API.
+            </p>
+          </div>
+
+          <div className="about-feature-card glass-card">
+            <div className="feature-icon-badge badge-blue">
+              <WiThermometer size={30} />
+            </div>
+            <h3 className="feature-title">Air Quality & Health Advisory</h3>
+            <p className="feature-desc">
+              US AQI gauge meter, pollutant breakdown (PM2.5, PM10, O3, NO2), and actionable outdoor safety & mask recommendations.
+            </p>
+          </div>
+
+          <div className="about-feature-card glass-card">
+            <div className="feature-icon-badge badge-cyan">
+              <WiDayRain size={30} />
+            </div>
+            <h3 className="feature-title">City Weather Duel</h3>
+            <p className="feature-desc">
+              Side-by-side comparison engine pitting any two global or national cities against each other with animated metric diffs.
             </p>
           </div>
         </div>

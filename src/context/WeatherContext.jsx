@@ -181,7 +181,7 @@ export const WeatherProvider = ({ children }) => {
 
   // Initial load: fetch last searched city or default city
   useEffect(() => {
-    const initialCity = getStoredLastCity() || 'London';
+    const initialCity = getStoredLastCity() || 'New Delhi';
     searchCity(initialCity, false);
   }, [searchCity]);
 

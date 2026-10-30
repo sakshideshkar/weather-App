@@ -1,10 +1,10 @@
 import React from 'react';
 import { useWeather } from '../../context/WeatherContext';
 import {
+  formatTemp,
   formatWindSpeed,
   getWindDirectionText,
   getUvCategory,
-  getAirQualityCategory,
   formatTimeFromIsoOrTimestamp
 } from '../../utils/formatters';
 import {
@@ -12,15 +12,14 @@ import {
   WiStrongWind,
   WiBarometer,
   WiSunrise,
-  WiSunset,
-  WiDust
+  WiThermometerExterior
 } from 'react-icons/wi';
 import {
   FaEye,
   FaSun,
+  FaMoon,
   FaCompass,
-  FaArrowUp,
-  FaArrowDown
+  FaCloud
 } from 'react-icons/fa6';
 import './WeatherDetails.css';
 
@@ -32,8 +31,9 @@ const WeatherDetails = ({ weather }) => {
   if (!weather || !current) return null;
 
   const uvInfo = getUvCategory(current.uvIndex);
-  const aqiInfo = getAirQualityCategory(current.airQuality);
   const windDirText = getWindDirectionText(current.windDirection);
+  const beaufort = current.beaufort || { number: 3, label: 'Gentle Breeze', desc: 'Leaves in motion' };
+  const moonPhase = current.moonPhase || { name: 'Full Moon', icon: '🌕', illumination: 100 };
 
   const sunriseTime = location?.sunrise
     ? formatTimeFromIsoOrTimestamp(location.sunrise, location.timezoneOffsetSec)
@@ -44,10 +44,15 @@ const WeatherDetails = ({ weather }) => {
 
   return (
     <div className="weather-details-section">
-      <h2 className="section-heading">Weather Highlights</h2>
+      <div className="details-header-row">
+        <h2 className="section-heading" style={{ marginBottom: 0 }}>
+          Atmospheric Highlights
+        </h2>
+        <span className="telemetry-badge">Live Sensor Metrics</span>
+      </div>
 
       <div className="details-grid">
-        {/* Humidity Card */}
+        {/* 1. Humidity Card */}
         <div className="detail-card glass-card">
           <div className="detail-card-header">
             <span className="detail-title">Humidity</span>
@@ -66,20 +71,48 @@ const WeatherDetails = ({ weather }) => {
             />
           </div>
           <span className="detail-status-text">
-            {current.humidity > 65 ? 'Humid & moist air' : current.humidity < 30 ? 'Dry air' : 'Comfortable'}
+            {current.humidity > 65 ? 'Humid & moist air' : current.humidity < 30 ? 'Dry air' : 'Comfortable air'}
           </span>
         </div>
 
-        {/* Wind Card */}
+        {/* 2. Dew Point Card */}
         <div className="detail-card glass-card">
           <div className="detail-card-header">
-            <span className="detail-title">Wind Status</span>
+            <span className="detail-title">Dew Point</span>
+            <div className="detail-icon-wrap icon-emerald">
+              <WiThermometerExterior size={26} />
+            </div>
+          </div>
+          <div className="detail-main-value">
+            <span className="value-number">
+              {formatTemp(current.dewPointC ?? current.tempC - 4, unit)}
+            </span>
+          </div>
+          <div className="dew-point-meter">
+            <span className="dew-badge">
+              {current.dewPointC > 20 ? 'Sticky & Oppressive' : current.dewPointC > 15 ? 'Humid' : current.dewPointC > 10 ? 'Comfortable' : 'Crisp & Dry'}
+            </span>
+          </div>
+          <span className="detail-status-text">
+            Moisture condensation threshold
+          </span>
+        </div>
+
+        {/* 3. Wind & Beaufort Scale Card */}
+        <div className="detail-card glass-card">
+          <div className="detail-card-header">
+            <span className="detail-title">Wind & Gusts</span>
             <div className="detail-icon-wrap icon-blue">
               <WiStrongWind size={28} />
             </div>
           </div>
           <div className="detail-main-value">
             <span className="value-number">{formatWindSpeed(current.windSpeedKmh, unit)}</span>
+            {current.windGustsKmh && (
+              <span className="value-sub-text">
+                Gusts: {formatWindSpeed(current.windGustsKmh, unit)}
+              </span>
+            )}
           </div>
           <div className="wind-direction-row">
             <div
@@ -89,15 +122,38 @@ const WeatherDetails = ({ weather }) => {
               <FaCompass size={18} />
             </div>
             <span className="wind-direction-label">
-              Direction: <strong>{windDirText} ({current.windDirection}°)</strong>
+              <strong>{windDirText} ({current.windDirection}°)</strong> • Beaufort {beaufort.number}
             </span>
           </div>
           <span className="detail-status-text">
-            {current.windSpeedKmh > 40 ? 'High winds caution' : 'Light to gentle breeze'}
+            {beaufort.label} ({beaufort.desc})
           </span>
         </div>
 
-        {/* UV Index Card */}
+        {/* 4. Cloud Cover Card */}
+        <div className="detail-card glass-card">
+          <div className="detail-card-header">
+            <span className="detail-title">Cloud Cover</span>
+            <div className="detail-icon-wrap icon-indigo">
+              <FaCloud size={16} />
+            </div>
+          </div>
+          <div className="detail-main-value">
+            <span className="value-number">{current.cloudCover ?? 25}</span>
+            <span className="value-unit">%</span>
+          </div>
+          <div className="progress-bar-track">
+            <div
+              className="progress-bar-fill fill-indigo"
+              style={{ width: `${current.cloudCover ?? 25}%` }}
+            />
+          </div>
+          <span className="detail-status-text">
+            {(current.cloudCover ?? 25) > 75 ? 'Overcast skies' : (current.cloudCover ?? 25) > 40 ? 'Partly cloudy' : 'Mostly clear sky'}
+          </span>
+        </div>
+
+        {/* 5. UV Index Card */}
         <div className="detail-card glass-card">
           <div className="detail-card-header">
             <span className="detail-title">UV Index</span>
@@ -118,11 +174,11 @@ const WeatherDetails = ({ weather }) => {
             />
           </div>
           <span className="detail-status-text">
-            {current.uvIndex >= 6 ? 'Sun protection required' : 'Low sun exposure risk'}
+            {current.uvIndex >= 6 ? 'Sun protection required' : 'Low sun exposure hazard'}
           </span>
         </div>
 
-        {/* Pressure Card */}
+        {/* 6. Pressure Card */}
         <div className="detail-card glass-card">
           <div className="detail-card-header">
             <span className="detail-title">Pressure</span>
@@ -145,7 +201,7 @@ const WeatherDetails = ({ weather }) => {
           </span>
         </div>
 
-        {/* Visibility Card */}
+        {/* 7. Visibility Card */}
         <div className="detail-card glass-card">
           <div className="detail-card-header">
             <span className="detail-title">Visibility</span>
@@ -164,36 +220,46 @@ const WeatherDetails = ({ weather }) => {
             />
           </div>
           <span className="detail-status-text">
-            {current.visibilityKm >= 9 ? 'Clear visibility' : 'Haze or mist in area'}
+            {current.visibilityKm >= 9 ? 'Clear horizontal sightline' : 'Haze or mist present'}
           </span>
         </div>
 
-        {/* Sunrise & Sunset Card */}
-        <div className="detail-card glass-card sun-cycle-card">
+        {/* 8. Lunar & Solar Astronomy Card */}
+        <div className="detail-card glass-card astronomy-card">
           <div className="detail-card-header">
-            <span className="detail-title">Sun Schedule</span>
+            <span className="detail-title">Sun & Moon Schedule</span>
             <div className="detail-icon-wrap icon-warm">
-              <WiSunrise size={28} />
+              <FaMoon size={16} />
             </div>
           </div>
-          <div className="sun-times-row">
-            <div className="sun-time-block">
-              <div className="sun-time-header">
-                <WiSunrise size={24} className="sun-rise-icon" />
-                <span>Sunrise</span>
+
+          <div className="astronomy-details-row">
+            {/* Sun times */}
+            <div className="astro-block">
+              <div className="astro-sub-header">
+                <WiSunrise size={20} className="sun-rise-icon" />
+                <span>Rise / Set</span>
               </div>
-              <span className="sun-time-val">{sunriseTime}</span>
+              <span className="astro-time-val">{sunriseTime} / {sunsetTime}</span>
+              {current.daylightDuration && (
+                <span className="astro-duration-note">Daylight: {current.daylightDuration}</span>
+              )}
             </div>
-            <div className="sun-time-divider" />
-            <div className="sun-time-block">
-              <div className="sun-time-header">
-                <WiSunset size={24} className="sun-set-icon" />
-                <span>Sunset</span>
+
+            <div className="astro-divider" />
+
+            {/* Moon Phase */}
+            <div className="astro-block">
+              <div className="astro-sub-header">
+                <span className="astro-moon-icon">{moonPhase.icon}</span>
+                <span>Moon Phase</span>
               </div>
-              <span className="sun-time-val">{sunsetTime}</span>
+              <span className="astro-time-val">{moonPhase.name}</span>
+              <span className="astro-duration-note">{moonPhase.illumination}% Illuminated</span>
             </div>
           </div>
-          <span className="detail-status-text">Local daylight schedule</span>
+
+          <span className="detail-status-text">Astronomical ephemeris</span>
         </div>
       </div>
     </div>

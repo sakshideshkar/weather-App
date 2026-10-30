@@ -1,0 +1,106 @@
+.ambient-sound-control-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.ambient-sound-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-pill);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.ambient-sound-btn:hover {
+  background: var(--bg-pill-hover);
+  color: var(--text-primary);
+  border-color: var(--border-highlight);
+}
+
+.ambient-sound-btn.playing {
+  background: rgba(16, 185, 129, 0.18);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: var(--accent-emerald);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+
+.sound-bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+}
+
+.sound-bar {
+  width: 2.5px;
+  background-color: var(--accent-emerald);
+  border-radius: 2px;
+  animation: equalize 1s infinite ease-in-out;
+}
+
+.bar1 {
+  height: 6px;
+  animation-delay: 0.1s;
+}
+
+.bar2 {
+  height: 12px;
+  animation-delay: 0.3s;
+}
+
+.bar3 {
+  height: 8px;
+  animation-delay: 0.2s;
+}
+
+@keyframes equalize {
+  0%, 100% {
+    transform: scaleY(0.4);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.ambient-volume-slider-popup {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-card);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-pop);
+  z-index: 50;
+  animation: fadeIn 0.2s ease;
+}
+
+.volume-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  min-width: 28px;
+}
+
+.volume-slider {
+  width: 80px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border-color);
+  accent-color: var(--accent-emerald);
+  cursor: pointer;
+}
+

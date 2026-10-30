@@ -1,36 +1,49 @@
 .weather-details-section {
-  margin-bottom: 2.25rem;
+  width: 100%;
 }
 
-.section-heading {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--text-primary);
+.details-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 1.25rem;
-  letter-spacing: -0.01em;
+  gap: 1rem;
+}
+
+.telemetry-badge {
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-full);
+  background: rgba(56, 189, 248, 0.12);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .details-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.15rem;
 }
 
 .detail-card {
-  padding: 1.5rem;
+  padding: 1.35rem 1.45rem;
+  border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 1rem;
-  border-radius: var(--radius-lg);
+  gap: 0.65rem;
+  min-height: 175px;
   background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  transition: all var(--transition-normal);
 }
 
 .detail-card:hover {
   transform: translateY(-3px);
-  box-shadow: var(--shadow-pop);
+  border-color: var(--border-color-hover);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
 }
 
 .detail-card-header {
@@ -40,59 +53,29 @@
 }
 
 .detail-title {
-  font-size: 0.95rem;
+  font-size: 0.86rem;
   font-weight: 600;
   color: var(--text-secondary);
 }
 
 .detail-icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: var(--radius-md);
 }
 
-.icon-cyan {
-  background: rgba(56, 189, 248, 0.12);
-  color: var(--accent-cyan);
-}
-
-.icon-blue {
-  background: rgba(59, 130, 246, 0.12);
-  color: var(--accent-blue);
-}
-
-.icon-amber {
-  background: rgba(245, 158, 11, 0.12);
-  color: var(--accent-amber);
-}
-
-.icon-indigo {
-  background: rgba(99, 102, 241, 0.12);
-  color: var(--accent-indigo);
-}
-
-.icon-emerald {
-  background: rgba(16, 185, 129, 0.12);
-  color: var(--accent-emerald);
-}
-
-.icon-warm {
-  background: rgba(251, 146, 60, 0.12);
-  color: #fb923c;
-}
-
-/* Values */
 .detail-main-value {
   display: flex;
   align-items: baseline;
   gap: 0.35rem;
+  flex-wrap: wrap;
 }
 
 .value-number {
-  font-size: 2.1rem;
+  font-size: 2rem;
   font-weight: 800;
   color: var(--text-primary);
   line-height: 1;
@@ -104,52 +87,77 @@
   color: var(--text-secondary);
 }
 
-.value-badge {
-  padding: 0.25rem 0.65rem;
-  border-radius: var(--radius-full);
-  font-size: 0.8rem;
-  font-weight: 700;
-  margin-left: 0.5rem;
+.value-sub-text {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  width: 100%;
+  margin-top: 0.2rem;
 }
 
-/* Progress Bars */
+.value-badge {
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-full);
+}
+
 .progress-bar-track {
   width: 100%;
   height: 6px;
-  border-radius: var(--radius-full);
   background: var(--bg-pill);
+  border-radius: var(--radius-full);
   overflow: hidden;
 }
 
 .progress-bar-fill {
   height: 100%;
   border-radius: var(--radius-full);
-  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width 0.6s ease;
 }
 
 .fill-cyan {
-  background: linear-gradient(90deg, #38bdf8, #0ea5e9);
+  background: linear-gradient(90deg, #38bdf8, #0284c7);
+}
+
+.fill-blue {
+  background: linear-gradient(90deg, #60a5fa, #2563eb);
 }
 
 .fill-indigo {
-  background: linear-gradient(90deg, #818cf8, #6366f1);
+  background: linear-gradient(90deg, #818cf8, #4f46e5);
 }
 
 .fill-emerald {
-  background: linear-gradient(90deg, #34d399, #10b981);
+  background: linear-gradient(90deg, #34d399, #059669);
 }
 
 .detail-status-text {
-  font-size: 0.82rem;
+  font-size: 0.74rem;
   color: var(--text-muted);
-  font-weight: 500;
+  line-height: 1.35;
 }
 
-/* Wind needle */
+/* Dew Point Meter */
+.dew-point-meter {
+  display: flex;
+}
+
+.dew-badge {
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-full);
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--accent-emerald);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+/* Wind Direction */
 .wind-direction-row {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.5rem;
 }
 
 .wind-compass-needle {
@@ -157,59 +165,60 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.6s ease;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .wind-direction-label {
-  font-size: 0.88rem;
+  font-size: 0.76rem;
   color: var(--text-secondary);
 }
 
-.wind-direction-label strong {
-  color: var(--text-primary);
-}
-
-/* Sun cycle card */
-.sun-times-row {
+/* Astronomy Card */
+.astronomy-details-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.5rem 0;
+  gap: 0.5rem;
 }
 
-.sun-time-block {
+.astro-block {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.2rem;
 }
 
-.sun-time-header {
+.astro-sub-header {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
-  font-size: 0.82rem;
-  font-weight: 600;
+  gap: 0.3rem;
+  font-size: 0.74rem;
   color: var(--text-muted);
+  font-weight: 600;
 }
 
 .sun-rise-icon {
   color: #fbbf24;
 }
 
-.sun-set-icon {
-  color: #f97316;
+.astro-moon-icon {
+  font-size: 1rem;
 }
 
-.sun-time-val {
-  font-size: 1.15rem;
+.astro-time-val {
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--text-primary);
 }
 
-.sun-time-divider {
+.astro-duration-note {
+  font-size: 0.68rem;
+  color: var(--accent-cyan);
+}
+
+.astro-divider {
   width: 1px;
-  height: 36px;
+  height: 45px;
   background: var(--border-color);
 }
 

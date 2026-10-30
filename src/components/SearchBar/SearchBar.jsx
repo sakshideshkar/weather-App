@@ -6,9 +6,11 @@ import {
   FaMagnifyingGlass,
   FaLocationCrosshairs,
   FaXmark,
-  FaLocationDot
+  FaLocationDot,
+  FaMicrophone
 } from 'react-icons/fa6';
 import { FiLoader } from 'react-icons/fi';
+import { initSpeechRecognition, cleanVoiceTranscript } from '../../utils/speechVoice';
 import './SearchBar.css';
 
 const POPULAR_CITIES = [
@@ -19,8 +21,9 @@ const POPULAR_CITIES = [
   'Chennai',
   'Hyderabad',
   'Jaipur',
-  'Tokyo',
+  'Srinagar',
   'London',
+  'Tokyo',
   'New York',
   'Dubai'
 ];
@@ -34,9 +37,73 @@ const SearchBar = ({ onSearchSuccess }) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isSearchingSuggestions, setIsSearchingSuggestions] = useState(false);
   const [localError, setLocalError] = useState('');
+  const [isListeningVoice, setIsListeningVoice] = useState(false);
+  const recognitionRef = useRef(null);
+
+  const handleVoiceSearch = () => {
+    if (isListeningVoice) {
+      recognitionRef.current?.stop();
+      setIsListeningVoice(false);
+      return;
+    }
+
+    const rec = initSpeechRecognition();
+    if (!rec) {
+      setLocalError('Voice recognition is not supported in this browser. Please type to search.');
+      return;
+    }
+
+    recognitionRef.current = rec;
+    setIsListeningVoice(true);
+    setLocalError('');
+
+    rec.onresult = async (event) => {
+      const speechTranscript = event.results[0]?.[0]?.transcript || '';
+      const cleanedCity = cleanVoiceTranscript(speechTranscript);
+      setIsListeningVoice(false);
+
+      if (cleanedCity) {
+        setQuery(cleanedCity);
+        const result = await searchCity(cleanedCity);
+        if (result && onSearchSuccess) {
+          onSearchSuccess(result);
+        }
+      } else {
+        setLocalError(`Could not identify city from "${speechTranscript}". Please try again.`);
+      }
+    };
+
+    rec.onerror = () => {
+      setIsListeningVoice(false);
+      setLocalError('Microphone listening timed out. Click mic to try again.');
+    };
+
+    rec.onend = () => {
+      setIsListeningVoice(false);
+    };
+
+    try {
+      rec.start();
+    } catch {
+      setIsListeningVoice(false);
+    }
+  };
 
   const searchContainerRef = useRef(null);
+  const inputRef = useRef(null);
   const debounceTimerRef = useRef(null);
+
+  // Global Keyboard Shortcut: '/' or 'Ctrl + K' to focus search
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.key === '/' || (e.ctrlKey && e.key === 'k') || (e.metaKey && e.key === 'k')) && document.activeElement !== inputRef.current) {
+        e.preventDefault();
+        inputRef.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // Debounced autocomplete suggestions
   useEffect(() => {
@@ -54,7 +121,7 @@ const SearchBar = ({ onSearchSuccess }) => {
         const results = await searchCitySuggestions(query);
         setSuggestions(results);
         setShowSuggestions(results.length > 0);
-      } catch (e) {
+      } catch {
         setSuggestions([]);
       } finally {
         setIsSearchingSuggestions(false);
@@ -127,13 +194,13 @@ const SearchBar = ({ onSearchSuccess }) => {
     setShowSuggestions(false);
     try {
       const coords = await getCurrentLocation();
-      const result = await searchCoords(coords.lat, coords.lon);
+      const result = await searchCoords(coords.lat, coords.lon, coords.cityName);
       if (result) {
         setQuery(result.location.name);
         if (onSearchSuccess) onSearchSuccess(result);
       }
     } catch (err) {
-      setLocalError(err.message || 'Unable to access your current location.');
+      setLocalError(err.message || 'Unable to access your current location. Please check browser permissions or search manually.');
     }
   };
 
@@ -142,6 +209,7 @@ const SearchBar = ({ onSearchSuccess }) => {
     setSuggestions([]);
     setShowSuggestions(false);
     setLocalError('');
+    inputRef.current?.focus();
   };
 
   return (
@@ -151,9 +219,10 @@ const SearchBar = ({ onSearchSuccess }) => {
           <FaMagnifyingGlass className="search-input-icon" />
 
           <input
+            ref={inputRef}
             type="text"
             className="search-input"
-            placeholder="Search for any city (e.g. Paris, Tokyo, New York)..."
+            placeholder="Search city across the globe (or press '/' to focus)..."
             value={query}
             onChange={(e) => {
               setQuery(e.target.value);
@@ -166,6 +235,13 @@ const SearchBar = ({ onSearchSuccess }) => {
             id="search-city-input"
             autoComplete="off"
           />
+
+          {/* Keyboard shortcut hint */}
+          {!query && (
+            <span className="search-shortcut-hint" onClick={() => inputRef.current?.focus()}>
+              <kbd>/</kbd>
+            </span>
+          )}
 
           {isSearchingSuggestions && (
             <FiLoader className="search-spinner animate-spin" />
@@ -183,6 +259,21 @@ const SearchBar = ({ onSearchSuccess }) => {
               <FaXmark size={14} />
             </button>
           )}
+
+          {/* Voice Search Button */}
+          <button
+            type="button"
+            className={`voice-search-btn ${isListeningVoice ? 'listening' : ''}`}
+            onClick={handleVoiceSearch}
+            title={isListeningVoice ? 'Listening... Speak city name' : 'Voice Search (Speak city name)'}
+            aria-label="Voice Search"
+            id="btn-voice-search"
+          >
+            <FaMicrophone size={14} className={isListeningVoice ? 'voice-mic-active' : ''} />
+            <span className="voice-btn-text">
+              {isListeningVoice ? 'Listening...' : 'Voice'}
+            </span>
+          </button>
 
           <button
             type="button"
@@ -247,7 +338,7 @@ const SearchBar = ({ onSearchSuccess }) => {
 
       {/* Popular City Pills for 1-Click Exploration */}
       <div className="popular-cities-wrap">
-        <span className="popular-label">Popular:</span>
+        <span className="popular-label">Trending:</span>
         <div className="popular-cities-list">
           {POPULAR_CITIES.map((city) => (
             <button
